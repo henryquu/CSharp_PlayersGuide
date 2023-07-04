@@ -2,9 +2,9 @@
 Console.WriteLine(b.GetCost());
 
 class Arrow {
-    public Arrowhead _arrowhead;
-    public int _shaft;
-    public Fletching _fletching;
+    private Arrowhead _arrowhead;
+    private int _shaft;
+    private Fletching _fletching;
 
     public Arrow() {
         string [] arrowheads = new string [] { "Steel", "Wood", "Obsidian" };
@@ -14,6 +14,10 @@ class Arrow {
         _shaft = GetInt("shaft", "length", 60, 100);
         _fletching = (Fletching) (Menu(fletchings, "fletching", 0, 2));
     }
+
+    public Arrowhead GetArrowhead() => _arrowhead;
+    public Fletching GetFletching() => _fletching;
+    public int GetShaft() => _shaft;
 
     public int Menu(string [] items, string item, int min, int max) {
         int number = min - 1;
