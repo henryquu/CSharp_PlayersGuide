@@ -2,22 +2,18 @@
 Console.WriteLine(b.GetCost());
 
 class Arrow {
-    private Arrowhead _arrowhead;
-    private int _shaft;
-    private Fletching _fletching;
+    public Arrowhead _Arrowhead { get; set;}
+    public int _Shaft { get; set; }
+    public Fletching _Fletching { get; set; }
 
     public Arrow() {
         string [] arrowheads = new string [] { "Steel", "Wood", "Obsidian" };
         string [] fletchings = new string [] { "Plastic", "Turkey Feathers", "Goose Feathers" };
 
-        _arrowhead = (Arrowhead) (Menu(arrowheads, "arrowhead", 0, 2));
-        _shaft = GetInt("shaft", "length", 60, 100);
-        _fletching = (Fletching) (Menu(fletchings, "fletching", 0, 2));
+        _Arrowhead = (Arrowhead) (Menu(arrowheads, "arrowhead", 0, 2));
+        _Shaft = GetInt("shaft", "length", 60, 100);
+        _Fletching = (Fletching) (Menu(fletchings, "fletching", 0, 2));
     }
-
-    public Arrowhead GetArrowhead() => _arrowhead;
-    public Fletching GetFletching() => _fletching;
-    public int GetShaft() => _shaft;
 
     public int Menu(string [] items, string item, int min, int max) {
         int number = min - 1;
@@ -53,20 +49,20 @@ class Arrow {
     public float GetCost() {
         float cost;
 
-        cost = _arrowhead switch {
+        cost = _Arrowhead switch {
 
             Arrowhead.Steel => 10,
             Arrowhead.Wood => 3,
             _ => 5
         };
 
-        cost += _fletching switch {
+        cost += _Fletching switch {
             Fletching.Plastic => 10,
             Fletching.TurkeyFeathers => 5,
             _ => 3
         };
 
-        cost += 0.05f * _shaft;
+        cost += 0.05f * _Shaft;
 
         return cost;
     }
