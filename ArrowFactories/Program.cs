@@ -5,11 +5,11 @@ Console.WriteLine("3. Marksman arrow");
 Console.WriteLine("4. Custom arrow");
 Console.Write("Enter the number of the arrow: ");
 
-Arrow a = Console.ReadLine() switch {
+Arrow a = Console.ReadLine()     switch {
     "1" => Arrow.CreateEliteArrow(),
     "2" => Arrow.CreateBeginnerArrow(),
     "3" => Arrow.CreateMarksmanArrow(),
-    _ => new Arrow()
+    _ => Arrow.CreateCustom()
 
 };
 
