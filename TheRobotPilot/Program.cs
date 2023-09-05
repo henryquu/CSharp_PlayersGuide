@@ -1,17 +1,17 @@
-﻿new Game();
+﻿new Game(new RobotPilot());
 
 public class Game {
     private int manticore;
     private int city;
     private int Round { get;  set; }
 
-    public Game(int manticore = 10, int city = 15) {
+    public Game(IPilot Pilot, int manticore = 10, int city = 15) {
         this.manticore = manticore;
         this.city = city;
 
         Round = 1;
 
-        int distance = GetPosition();
+        int distance = Pilot.GetPosition();
         int guessed = 0;
         int damage;
 
@@ -20,7 +20,7 @@ public class Game {
             
             TextMessages.RoundStart(Round, city, manticore, damage);
 
-            guessed = Player.GetGuess();
+            guessed = Player.GetGuess("Enter desired cannon range: ");
             if (guessed == distance)
                 manticore -= damage;
 
@@ -34,12 +34,6 @@ public class Game {
         TextMessages.GameOver(city, manticore);
     }
 
-    int GetPosition() {
-        Random random = new Random();
-
-        Console.Clear();
-        return random.Next(1, 100);
-    }
     int CurrentDamage(int round) {
         int damage = (round % 5 == 0) ? 5 : 1;
         damage *= (round % 3 == 0) ? 3 : 1;
@@ -81,15 +75,34 @@ public static class TextMessages {
 }
 
 public static class Player {
-    public static int GetGuess() {
+    public static int GetGuess(string message) {
         int number = 0;
 
         Console.ForegroundColor = ConsoleColor.Yellow;
         while (number < 1 || number > 100) {
-            Console.Write("Enter desired cannon range: ");
+            Console.Write(message);
             number = int.Parse(Console.ReadLine());
         }
 
         return number;
+    }
+}
+
+public interface IPilot {
+    public int GetPosition();
+}
+
+public class RobotPilot: IPilot {
+    public int GetPosition() {
+        Random random = new Random();
+
+        Console.Clear();
+        return random.Next(1, 100);
+    }
+}
+
+public class HumanPilot: IPilot {
+    public int GetPosition() {
+        return Player.GetGuess("Enter the position of the Manticore: ");
     }
 }
